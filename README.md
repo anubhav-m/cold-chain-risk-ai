@@ -26,6 +26,8 @@ This system improves upon that by combining:
 
 The system is built as a four-stage pipeline:
 
+![System Architecture](./assets/system_architecture.png)
+
 <br>
 
 ### Stage 1: Anomaly Detection (AnomalyBERT)
@@ -94,6 +96,8 @@ This stage evaluates the severity of the situation using engineered features.
 - Risk probability
 - Binary classification (safe/risk)
 
+<br>
+
 **Feature Importance:**
 
 ![Feature Importance](./assets/feature_importance.png)
@@ -121,18 +125,6 @@ While earlier stages focus on detection and analysis, this stage is responsible 
 
 <br>
 
-#### Decision Logic
-
-Each input contributes to a combined risk score:
-
-- **anomaly_score** → how unusual the reading is  
-- **sustained_anomaly** → whether the issue is persistent  
-- **rule_violation** → whether safety limits are breached  
-- **rf_probability** → contextual risk from feature-based model  
-
-These signals are aggregated to determine the final risk level.
-
-<br>
 
 #### Risk Classification Levels
 
@@ -143,17 +135,6 @@ These signals are aggregated to determine the final risk level.
 | MEDIUM | Moderate Risk | Sustained or repeated anomaly |
 | CRITICAL | High Risk | Severe and prolonged violation |
 
-<br>
-
-#### Example Scenarios
-
-| Scenario | Behavior | Final Output |
-|---------|--------|-------------|
-| Single spike above 8°C | Not sustained | NO / LOW |
-| Temperature oscillating near 8°C | Mild instability | LOW |
-| Sustained temperature above 8°C | Continuous violation | MEDIUM |
-| Long duration above 9°C | Severe failure | CRITICAL |
-| Temperature below 2°C for long period | Freezing damage risk | CRITICAL |
 
 <br>
 
@@ -174,11 +155,18 @@ This makes the system suitable for real-world deployment where both accuracy and
 
 ## Input and Output
 
-<br>
+
 
 ### Input
 
 The system takes a CSV file containing time-series temperature data.
+
+<div align="center">
+
+![alt text](./assets/input_format.png)
+
+</div>
+
 
 **Required format:**
 
@@ -207,6 +195,12 @@ final_output.csv
 ```
 
 is generated in the same directory.
+
+<div align="center">
+
+![alt text](./assets/output.png)
+
+</div>
 
 This file contains:
 
