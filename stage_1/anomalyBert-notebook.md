@@ -1,1 +1,0 @@
-Create a Jupyter notebook which compares original synthetic dataset with inferred anomalies. Visualize in a chart. Parameter is model path and dataset.

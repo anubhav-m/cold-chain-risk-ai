@@ -1,5 +1,3 @@
-
-
 # AnomalyBERT
 
 Anomaly detection in timeseries data using an encoder-only transformer architecture. Implemented as a Python library with a reference CLI.
@@ -30,6 +28,7 @@ Anomaly detection in timeseries data using an encoder-only transformer architect
   - [Results](#results)
 
 ## How it was created
+
 Whole model library was created using Claude Opus 4.6. Instructions are in [anomalyBert.md](anomalyBert.md).
 
 ## How the Model Works
@@ -75,26 +74,26 @@ Input: [(t1,v1), (t2,v2), ..., (tN,vN)]
 
 ### Configurable Parameters
 
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `n_layers` | Number of transformer encoder layers (depth) | 3 |
-| `d_model` | Embedding dimension (width) | 128 |
-| `n_heads` | Number of attention heads | 4 |
-| `d_ff` | Feedforward hidden dimension | 256 |
-| `window_size` | Sliding window length | 64 |
-| `stride` | Sliding window step size | 1 |
-| `dropout` | Dropout rate | 0.1 |
+| Parameter     | Description                                  | Default |
+| ------------- | -------------------------------------------- | ------- |
+| `n_layers`    | Number of transformer encoder layers (depth) | 3       |
+| `d_model`     | Embedding dimension (width)                  | 128     |
+| `n_heads`     | Number of attention heads                    | 4       |
+| `d_ff`        | Feedforward hidden dimension                 | 256     |
+| `window_size` | Sliding window length                        | 64      |
+| `stride`      | Sliding window step size                     | 1       |
+| `dropout`     | Dropout rate                                 | 0.1     |
 
 ### Training
 
 Training uses supervised learning with labeled data. The training data format is CSV with columns:
 
-| Column | Description |
-|--------|-------------|
-| `timestamp` | Integer timestamp |
-| `value` | Numeric observation |
+| Column        | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| `timestamp`   | Integer timestamp                                      |
+| `value`       | Numeric observation                                    |
 | `probability` | How much the value contributes to anomaly (0.0 to 1.0) |
-| `anomaly_tag` | Binary label (0 = normal, 1 = anomaly) |
+| `anomaly_tag` | Binary label (0 = normal, 1 = anomaly)                 |
 
 The loss function is binary cross-entropy between predicted anomaly scores and target probability values.
 
@@ -105,6 +104,7 @@ A pre-trained model can be finetuned on domain-specific data. The finetuning mec
 ### Normalization
 
 Values are normalized before being fed to the model. Supported algorithms:
+
 - **MinMax** (default): scales values to `[0, 1]`
 - **ZScore**: centers to mean=0, std=1
 
@@ -209,6 +209,7 @@ anomalybert export --model models/model.pt --output models/model.onnx
 ```
 
 This produces two files:
+
 - `model.onnx` — the ONNX model graph and weights
 - `model.onnx.json` — metadata (model config + normalizer parameters)
 
@@ -283,8 +284,8 @@ The Jupyter notebook [compare_anomalies](notebooks/compare_anomalies.ipynb) visu
 
 It also prints precision and recall of the top-N predictions. Set `MODEL_PATH`, `DATASET_PATH`, and `TOP_N` in the first cell, then run all cells. Requires `matplotlib`.
 
-
 ## Results
+
 Inference on trend data (random eval synthetic dataset)
 ![](docs/images/2026-02-19-22-35-18.png)
 
